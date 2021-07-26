@@ -1,0 +1,16 @@
+.CreateCard {
+  background-color: black;
+  margin-left: 20px;
+  display: inline-block;
+  border-radius: 100px;
+  height: fit-content;
+}
+
+.CreateCard form {
+  display: flex;
+}
+
+.CreateCard Button {
+  margin-left: 10px;
+  width: 200px;
+}

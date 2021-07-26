@@ -6,9 +6,16 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/styletron-engine-atomic": "^1.1.1",
+    "@types/styletron-react": "^5.0.3",
+    "@types/styletron-standard": "^2.0.2",
+    "baseui": "10.0.0",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "styletron-engine-atomic": "^1.4.8",
+    "styletron-react": "^6.0.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -21,7 +28,15 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": [
+      "baseui"
+    ],
+    "rules": {
+      "baseui/deprecated-theme-api": "warn",
+      "baseui/deprecated-component-api": "warn",
+      "baseui/no-deep-imports": "warn"
+    }
   },
   "browserslist": {
     "production": [
@@ -34,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-baseui": "10.0.0"
   }
 }
