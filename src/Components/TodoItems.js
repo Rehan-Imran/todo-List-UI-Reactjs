@@ -2,6 +2,7 @@ import * as React from "react";
 import { Card } from "baseui/card";
 import { Input } from "baseui/input";
 import closeButton from "./Resources/cross.png";
+import DisplayTasks from "./DisplayTasks";
 import "./InputSkeleton.css";
 const TodoItems = (props) => {
   const changeEventHandler = (event) => {
@@ -18,18 +19,22 @@ const TodoItems = (props) => {
             props.onClick(props.data.id);
           }}
         />
+
+        <Input value={props.data.name} onChange={changeEventHandler} />
+        {props.task.length > 0 &&
+          props.task
+            .filter((item) => {
+              return item.cardId === props.data.id;
+            })
+            .map((item) => (
+              <DisplayTasks
+                key={item.id}
+                item={item}
+                titles={props.titles}
+                onChange={props.onChange}
+              />
+            ))}
       </Card>
-      <Input value={props.data.name} onChange={changeEventHandler} />
-      {props.task.length > 0 &&
-        props.task
-          .filter((item) => {
-            return item.cardId === props.id;
-          })
-          .map((item) => (
-            <Card key={item.id} draggable="true">
-              {item.name}
-            </Card>
-          ))}
     </div>
   );
 };

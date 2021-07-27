@@ -13,6 +13,8 @@ const engine = new Styletron();
 //   height: '100%',
 // });
 export default function App() {
+  const [isValied, setIsValied] = useState(false);
+  const [title, setTitle] = useState("");
   const [cardTitles, setCardTitles] = useState([]);
   const [tempTask, setTempTask] = useState("");
   const [task, setTask] = useState([]);
@@ -23,7 +25,6 @@ export default function App() {
       tempCardTitles = [...cardTitles];
       tempCardTitles.push(tempData);
       setCardTitles(tempCardTitles);
-      console.log(tempCardTitles);
     }
   };
   const updateHandler = (id, value) => {
@@ -48,13 +49,35 @@ export default function App() {
       let temp = [...task];
       temp.push(tempData);
       setTask(temp);
-      console.log(temp);
       setTempTask("");
     }
   };
-
   const taskHandler = (event) => {
     setTempTask(event.target.value);
+  };
+  const saveTitleHandler = (event) => {
+    event.preventDefault();
+    if (title.length > 0) {
+      setIsValied(true);
+    }
+  };
+  const titleHandler = (event) => {
+    setTitle(event.target.value);
+  };
+  const deleteTask = (taskId) => {
+    const tasks = task.filter((item) => item.id !== taskId);
+    setTask(tasks);
+  };
+  const updateTaskHandler = (cardId, taskId) => {
+    console.log(cardId, taskId);
+    const tempTasks = [...task];
+    console.log(task);
+    for (let item of tempTasks) {
+      if (item.id === taskId) {
+        item.cardId = cardId;
+      }
+    }
+    setTask(tempTasks);
   };
   return (
     <StyletronProvider value={engine}>
@@ -73,21 +96,40 @@ export default function App() {
             </InputSkeleton>
           )}
         </div>
+        <div className="divDesign">
+          {!isValied && (
+            <InputSkeleton
+              onSubmit={saveTitleHandler}
+              className="CreateCard"
+              value={title}
+              onChange={titleHandler}
+              placeholder="Enter title of progress.."
+              type="submit"
+            >
+              Add Task
+            </InputSkeleton>
+          )}
+          {isValied && <h2 style={{ marginLeft: 20 }}>{title}</h2>}
+        </div>
         <div className="App">
           {cardTitles.length > 0 &&
             cardTitles.map((title) => (
               <TodoItems
-                draggable="true"
                 onClick={cardDeleteHelper}
                 className="displayCard"
                 key={title.id}
                 id={title.id}
+                titles={cardTitles}
                 data={title}
                 setRecord={updateHandler}
                 task={task}
+                onDelete={deleteTask}
+                onChange={updateTaskHandler}
               />
             ))}
-          {cardTitles.length < 5 && <CreateCards onPress={saveRecordToState} />}
+          {cardTitles.length < 5 && isValied && (
+            <CreateCards onPress={saveRecordToState} />
+          )}
         </div>
       </BaseProvider>
     </StyletronProvider>

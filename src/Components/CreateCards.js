@@ -1,4 +1,3 @@
-import { Card } from "baseui/card";
 import React, { useState } from "react";
 import InputSkeleton from "./InputSkeleton";
 
